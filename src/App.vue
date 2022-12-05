@@ -194,35 +194,39 @@ export default {
     <div class="main" v-show="isLocal">
       <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
       <div class="local_main">
-        <p>local time</p>
+        <p>Local Time</p>
         <div class="local_wrap">
-            <div class="select_hour">
-              <p @click="selectHour(h,true)" v-for="h in hourArr" :key="h" v-show="isHour">{{h}}</p>
+            <div class="select_hour" v-show="isHour">
+              <p @click="selectHour(h,true)" v-for="h in hourArr" :key="h">{{h}}</p>
             </div>
-            <div class="select_min">
-              <p @click="selectMin(m,true)" v-for="m in minArr" :key="m" v-show="isMin">{{m}}</p>
+            <div class="select_min" v-show="isMin">
+              <p @click="selectMin(m,true)" v-for="m in minArr" :key="m">{{m}}</p>
             </div>
-          <Datepicker v-model="localDate"
-            name="local"/>
-          <div @click="clickHour">{{localHour}}</div>
-          <div>:</div>
-          <div @click="clickMin">{{localMin}}</div>
+
+          <Datepicker v-model="localDate" class="local_date"
+            name="local"
+            />
+          <div class="local_hour" @click="clickHour">{{localHour}}</div>
+          <div class="between">:</div>
+          <div class="local_min" @click="clickMin">{{localMin}}</div>
         </div>
       </div>
 <!-- ------------------------------ -->
       <div class="change" @click="isLocal=!isLocal">
-        Reverse icon
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z"/>
+        </svg>
       </div>
 <!-- ------------------------------ -->
       <div class="utc_main">
-        <p>utc time</p>
+        <p>UTC Time</p>
         <div class="utc_wrap">
-            <Datepicker v-model="utcDate"
+            <Datepicker v-model="utcDate" class="local_date"
               name="utc"
               disabled />
-            <div>{{utcHour}}</div>
-            <div>:</div>
-            <div>{{utcMin}}</div>
+            <div class="local_hour">{{utcHour}}</div>
+            <div class="between">:</div>
+            <div class="local_min">{{utcMin}}</div>
         </div>
       </div>
     </div>
@@ -231,35 +235,37 @@ export default {
     <div class="main" v-show="!isLocal">
       <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
       <div class="local_main">
-        <p>utc time</p>
+        <p>UTC Time</p>
         <div class="local_wrap">
-            <div class="select_hour">
-              <p @click="selectHour(h,false)" v-for="h in hourArr" :key="h" v-show="isHour">{{h}}</p>
+            <div class="select_hour" v-if="isHour">
+              <p @click="selectHour(h,false)" v-for="h in hourArr" :key="h">{{h}}</p>
             </div>
-            <div class="select_min">
-              <p @click="selectMin(m,false)" v-for="m in minArr" :key="m" v-show="isMin">{{m}}</p>
+            <div class="select_min" v-show="isMin">
+              <p @click="selectMin(m,false)" v-for="m in minArr" :key="m">{{m}}</p>
             </div>
-          <Datepicker v-model="utcDate"
+          <Datepicker v-model="utcDate" class="local_date"
             name="local"/>
-          <div @click="clickHour">{{utcHour}}</div>
-          <div>:</div>
-          <div @click="clickMin">{{utcMin}}</div>
+          <div class="local_hour" @click="clickHour">{{utcHour}}</div>
+          <div class="between">:</div>
+          <div class="local_min" @click="clickMin">{{utcMin}}</div>
         </div>
       </div>
 <!-- ------------------------------ -->
       <div class="change" @click="isLocal=!isLocal">
-        Reverse icon
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z"/>
+        </svg>
       </div>
 <!-- ------------------------------ -->
       <div class="utc_main">
-        <p>local time</p>
+        <p>Local Time</p>
         <div class="utc_wrap">
-            <Datepicker v-model="localDate"
+            <Datepicker v-model="localDate" class="local_date"
               name="utc"
               disabled />
-            <div>{{localHour}}</div>
-            <div>:</div>
-            <div>{{localMin}}</div>
+            <div class="local_hour">{{localHour}}</div>
+            <div class="between">:</div>
+            <div class="local_min">{{localMin}}</div>
         </div>
       </div>
     </div>
@@ -267,15 +273,60 @@ export default {
 </template>
 
 <style scoped>
-.local_main{
-  background-color: blanchedalmond;
+.cont{
+  height: 100vh;
+  /* width: 100%; */
+  background-color: #B8BDB5;
+  padding: 3em;
+}
+.main{
+  width: 100%;
+  margin: 0 auto;
+  /* color: white; */
 }
 .utc_main{
-  background-color: blanchedalmond;
+  background-color: #E0E2DB;
+  padding: 0.5em;
+  width: 100%;
+}
+.utc_main p{
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.local_main{
+  /* background-color: #D2D4C8; */
+  background-color: #E0E2DB;
+  padding: 0.5em;
+  width: 100%;
+}
+.local_main p{
+  font-size: 1.5em;
+  font-weight: bold;
 }
 .local_wrap{
   display: flex;
   position: relative;
+}
+.local_date{
+  background-color: #E0E2DB;
+  /* padding: 1em; */
+}
+.local_hour{
+  background-color: #E0E2DB;
+  /* padding: 1em; */
+  margin-left: 1em;
+  width: 2em;
+  text-align: right;
+}
+.local_min{
+  background-color: #E0E2DB;
+  /* padding: 1em; */
+  width: 2em;
+  text-align: right;
+}
+.between{
+  width: 1em;
+  text-align: right;
 }
 .utc_wrap{
   display: flex;
@@ -283,17 +334,33 @@ export default {
 .select_hour{
   position: absolute;
   top: 1.5em;
-  left: 0;
-  background-color: beige;
-  width: 300px;
+  right: 0;
+  background-color: white;
+  width: 60%;
   /* border: 1px solid #ccc; */
+  z-index: 101;
+  overflow: auto;
+  height: 60vh;
+  text-align: center;
+}
+.select_hour p{
+  font-size: 1em;
 }
 .select_min{
   position: absolute;
   top: 1.5em;
-  left: 0;
-  background-color: beige;
-  width: 300px;
+  right: 0;
+  background-color: white;
+  width: 60%;
   /* border: 1px solid #ccc; */
+  z-index: 101;
+  text-align: center;
+}
+.select_min p{
+  font-size: 1em;
+}
+.change{
+  padding: 0.5em;
+  text-align: center;
 }
 </style>
