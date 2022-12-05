@@ -147,6 +147,9 @@ export default {
           <div>:</div>
           <div>{{utcMin}}</div>
       </div>
+      <p>{{latitude}}</p>
+      <p>{{longitude}}</p>
+      <p>{{timestamp}}</p>
     </div>
   </div>
 </template>
