@@ -23,20 +23,18 @@ export default {
       offset:null,
       isLocal:true,
 
-      // latitude: 0,
-      // longitude: 0,
-      // timestamp:null,
     }
   },
   mounted(){
-    this.localDate = new Date()
-    this.localHour = this.localDate.getHours()
+    this.localDate = new Date() //localDateにDateオブジェクトを作る。たくさんのDateなデータが入っている。
+    this.localHour = this.localDate.getHours()  //なので、そこからget〜で色々取り出します
     this.localMin = this.localDate.getMinutes()
     this.offset = this.localDate.getTimezoneOffset()
     console.log(this.offset/60)
 
-    const localDateCopy = new Date()
+    const localDateCopy = new Date()  //この下のset〜を使うとデータが更新されてしまうので、コピーを作って対応するパターンです
     this.utcDate = new Date(localDateCopy.setHours(localDateCopy.getHours() + this.offsetHour))
+    //ミリ秒？とかの数字でデータを返された時は、上記のようにnew Date()にぶち込めば変換できます
     this.utcHour = this.utcDate.getHours()
     this.utcMin = this.utcDate.getMinutes()
   },
@@ -89,6 +87,7 @@ export default {
       const local = new Date(newVal)//そのままnewVal使うとリンクしてthis.localDateまで変わってしまうのでnewする
       const utc = local.setHours(local.getHours() + this.offsetHour)
       this.utcDate = new Date(utc)
+      console.log(this.localDate)
       console.log(this.utcDate)
     },
     changeLocalHour(newVal){
@@ -105,7 +104,7 @@ export default {
       this.utcHour = this.utcDate.getHours()
       this.utcMin = this.utcDate.getMinutes()
     },
-    // コピペしただけやからconse localとconst utcは逆ですよ！
+    // コピペしただけやからconse localとconst utcは逆ですよ！-------------------
     changeUtcDate(newVal){
       const local = new Date(newVal)//そのままnewVal使うとリンクしてthis.localDateまで変わってしまうのでnewする
       const utc = local.setHours(local.getHours() - this.offsetHour)
@@ -126,6 +125,7 @@ export default {
       this.localHour = this.localDate.getHours()
       this.localMin = this.localDate.getMinutes()
     },
+    // ----------------------------------------------------------------------
     selectHour(n,tf){
       if(tf){  //isLocalがtrueなら
         this.localHour = n
@@ -152,45 +152,17 @@ export default {
       this.isMin = !this.isMin
       this.isHour = false
     },
-
-    // getLocation () {
-    //     if (!navigator.geolocation) {
-    //       alert('現在地情報を取得できませんでした。お使いのブラウザでは現在地情報を利用できない可能性があります。エリアを入力してください。')
-    //       return
-    //     }
-    //     const options = {
-    //       enableHighAccuracy: false,
-    //       timeout: 5000,
-    //       maximumAge: 0
-    //     }
-    //     navigator.geolocation.getCurrentPosition(this.success, this.error, options)
-    // },
-    // success (position) {
-    //   this.latitude = position.coords.latitude
-    //   this.longitude = position.coords.longitude
-    //   this.timestamp = position.timestamp
-    // },
-    // error (error) {
-    //   switch (error.code) {
-    //     case 1: //PERMISSION_DENIED
-    //       alert('位置情報の利用が許可されていません')
-    //       break
-    //     case 2: //POSITION_UNAVAILABLE
-    //       alert('現在位置が取得できませんでした')
-    //       break
-    //     case 3: //TIMEOUT
-    //       alert('タイムアウトになりました')
-    //       break
-    //     default:
-    //       alert('現在位置が取得できませんでした')
-    //       break
-    //   }
-    // },
 }}
 </script>
 
 <template>
   <div class="cont">
+    <div class="title">
+      UTC NOW
+    </div>
+    <div class="footer">
+      {{localDate}}
+    </div>
     <div class="main" v-show="isLocal">
       <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
       <div class="local_main">
@@ -207,7 +179,7 @@ export default {
             name="local"
             />
           <div class="local_hour" @click="clickHour">{{localHour}}</div>
-          <div class="between">:</div>
+          <!-- <div class="between"></div> -->
           <div class="local_min" @click="clickMin">{{localMin}}</div>
         </div>
       </div>
@@ -273,21 +245,55 @@ export default {
 </template>
 
 <style scoped>
+/* body効いてない */
+/* body{
+  background-color: #B8BDB5;
+  margin: 0 !important; 
+} */
 .cont{
   height: 100vh;
   /* width: 100%; */
-  background-color: #B8BDB5;
-  padding: 3em;
+  background-color: #fcfcfc;
+  /* padding: 0 3em; */
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  /* background-image: url(assets/11.jpg); */
+  background-size: cover;
+  /* background-blend-mode: color-burn; */
+  background-blend-mode: multiply;
 }
-.main{
+.title{
+  /* position: fixed; */
+  /* top: 10%; */
+  font-size: 1em;
+  line-height: 3rem;
+  font-weight: bold;
+  background-color: black;
+  color: white;
+  width: 100%;
+  /* text-align: center; */
+}
+.footer{
+  position: fixed;
+  bottom: 5%;
+  width: 100%;
+  font-size: 0.8em;
+  background-color: black;
+  color: white;
+  width: 100%;
+  text-align: center;
+}
+/* .main{
   width: 100%;
   margin: 0 auto;
-  /* color: white; */
-}
+  /* color: white;
+} */
 .utc_main{
   background-color: #E0E2DB;
-  padding: 0.5em;
+  padding: 1em 0.5em;
   width: 100%;
+  border-radius: 20px;
 }
 .utc_main p{
   font-size: 1.5em;
@@ -295,34 +301,57 @@ export default {
 }
 .local_main{
   /* background-color: #D2D4C8; */
-  background-color: #E0E2DB;
-  padding: 0.5em;
+  /* background-color: #E0E2DB; */
+  /* padding: 1em 0.5em; */
   width: 100%;
+  border-radius: 20px;
 }
 .local_main p{
-  font-size: 1.5em;
+  font-size: 2em;
   font-weight: bold;
+  text-align: center;
+      /* background: linear-gradient(transparent 40%, #4bd 100%); */
+    /* display: inline-block; */
+    /* padding: 0 10px 0 0; */
 }
 .local_wrap{
   display: flex;
-  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  /* position: relative; */
 }
 .local_date{
-  background-color: #E0E2DB;
+  /* background-color: #E0E2DB; */
   /* padding: 1em; */
+    line-height: 3rem;
+  height: 3rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding-left: .5rem;
+  width: 60%;
+  margin-right: .2rem;
 }
 .local_hour{
-  background-color: #E0E2DB;
+  /* background-color: #E0E2DB; */
   /* padding: 1em; */
-  margin-left: 1em;
+  /* margin-left: 1em;
   width: 2em;
-  text-align: right;
+  text-align: right; */
 }
+.local_hour,
 .local_min{
-  background-color: #E0E2DB;
+  /* background-color: #E0E2DB; */
   /* padding: 1em; */
-  width: 2em;
-  text-align: right;
+  /* width: 2em;
+  text-align: right; */
+  font-size: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  line-height: 3rem;
+  height: 3rem;
+  padding-left: .5rem;
+  width: 20%;
+  margin-right: .2rem;
 }
 .between{
   width: 1em;
@@ -362,5 +391,15 @@ export default {
 .change{
   padding: 0.5em;
   text-align: center;
+}
+
+</style>
+
+<style>
+.local_date div > input {
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  font-size: 1.2rem;
 }
 </style>
