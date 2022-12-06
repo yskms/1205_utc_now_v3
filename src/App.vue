@@ -329,11 +329,11 @@ export default {
   font-weight: bold;
   text-align: center;
 }
-.local_main span{
+/* .local_main span{
   background: linear-gradient(transparent 40%, #4bd 100%);
   display: inline-block;
   padding: 0 10px 0 0;
-}
+} */
 .local_wrap,
 .utc_wrap{
   display: flex;
