@@ -172,9 +172,6 @@ export default {
       <div class="local_main">
         <p><span>Local Time</span></p>
         <div class="local_wrap">
-            <div class="select_hour" v-show="isHour">
-              <p @click="selectHour(h,true)" v-for="h in hourArr" :key="h">{{h}}</p>
-            </div>
             <div class="select_min" v-show="isMin">
               <p @click="selectMin(m,true)" v-for="m in minArr" :key="m">{{m}}</p>
             </div>
@@ -184,6 +181,9 @@ export default {
             />
           <div class="local_hour" @click="clickHour">{{localHour}}</div>
           <!-- <div class="between"></div> -->
+            <div class="select_hour" v-show="isHour">
+              <p @click="selectHour(h,true)" v-for="h in hourArr" :key="h">{{h}}</p>
+            </div>
           <div class="local_min" @click="clickMin">{{localMin}}</div>
         </div>
       </div>
@@ -301,6 +301,7 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100%;
+  text-align: center;
 }
 /* .utc_main{ */
   /* background-color: #E0E2DB; */
@@ -372,9 +373,10 @@ export default {
   border-radius: 5px;
   line-height: 3rem;
   height: 3rem;
-  padding-left: .5rem;
+  /* padding-left: .5rem; */
   width: 20%;
   margin-right: .2rem;
+  position: relative;
 }
 .between{
   width: 1em;
@@ -385,31 +387,40 @@ export default {
 } */
 .select_hour{
   position: absolute;
-  top: 1.5em;
+  top: 0;
   right: 0;
-  background-color: white;
-  width: 60%;
+  background-color: rgba(252, 252, 252, 0.7);
+  width: 100%;
   /* border: 1px solid #ccc; */
   z-index: 101;
   overflow: auto;
-  height: 60vh;
+  height: 100vh;
   text-align: center;
-}
-.select_hour p{
-  font-size: 1em;
+  font-weight: normal;
 }
 .select_min{
   position: absolute;
-  top: 1.5em;
+  top: 0;
   right: 0;
-  background-color: white;
-  width: 60%;
+  background-color: rgba(252, 252, 252, 0.7);
+  width: 100%;
   /* border: 1px solid #ccc; */
   z-index: 101;
+  overflow: auto;
+  height: 100vh;
   text-align: center;
+  font-weight: normal;
+      display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.select_hour p{
+  font-size: 1em;
+  font-weight: normal;
 }
 .select_min p{
   font-size: 1em;
+  font-weight: normal;
 }
 .change{
   padding: 0.5em;
@@ -424,5 +435,6 @@ export default {
   border-radius: 5px;
   width: 100%;
   font-size: 1.2rem;
+  background-color: #fcfcfc;
 }
 </style>
